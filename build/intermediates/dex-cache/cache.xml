@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="/Users/todd/Downloads/BluetoothLeGatt/BluetoothLeGattSample/build/intermediates/pre-dexed/debug/support-v4-19.1.0-850efe58758d4f395aa1b4d12b91f744f64b418d.jar"
+        jar="/Users/todd/android-sdk-macosx/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+    <item
+        dex="/Users/todd/Downloads/BluetoothLeGatt/BluetoothLeGattSample/build/intermediates/pre-dexed/debug/support-v13-19.1.0-3d0a077c1d50c84778de2139e25a453c9e09b4ab.jar"
+        jar="/Users/todd/android-sdk-macosx/extras/android/m2repository/com/android/support/support-v13/19.1.0/support-v13-19.1.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="6b852a232f642c75a7fdfc7212b841b8c8f8959c"/>
+    <item
+        dex="/Users/todd/Downloads/BluetoothLeGatt/BluetoothLeGattSample/build/intermediates/pre-dexed/debug/Parse-1.5.1-f0b1fbbcbad2c698689811b8409f95ff9341860c.jar"
+        jar="/Users/todd/Downloads/BluetoothLeGatt/BluetoothLeGattSample/libs/Parse-1.5.1.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="3d645417e7780d44f32e29a3ec6b729b75aef26c"/>
+
+</pre-dex-items>
