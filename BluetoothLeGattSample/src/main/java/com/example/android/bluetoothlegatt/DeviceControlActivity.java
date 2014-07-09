@@ -114,9 +114,10 @@ public class DeviceControlActivity extends Activity {
             } else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
                 // Show all the supported services and characteristics on the user interface.
                 displayGattServices(mBluetoothLeService.getSupportedGattServices());
-            } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
-                displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
             }
+//            else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
+//                displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
+//            }
         }
     };
 
@@ -246,14 +247,6 @@ public class DeviceControlActivity extends Activity {
         if (data != null) {
             mDataField.setText(data);
         }
-        ParseObject testObject = new ParseObject("Characteristic");
-        testObject.put("value", data);
-        testObject.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                Toast.makeText(getApplication(), "saved!", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     // Demonstrates how to iterate through the supported GATT Services/Characteristics.

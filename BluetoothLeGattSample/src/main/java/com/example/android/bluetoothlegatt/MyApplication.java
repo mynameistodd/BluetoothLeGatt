@@ -12,10 +12,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        ParseObject.registerSubclass(Characteristic.class);
         Parse.initialize(this, "7W9y8Zjy1WHlTdWsL8W8fXu6gkhoTx7839SWELDD", "kaFrcmwHvIoUTjVkO2WArCOIZFMFwebYUtYiIIz9");
-
-//        ParseObject testObject = new ParseObject("TestObject");
-//        testObject.put("foo", "bar");
-//        testObject.saveInBackground();
     }
 }
