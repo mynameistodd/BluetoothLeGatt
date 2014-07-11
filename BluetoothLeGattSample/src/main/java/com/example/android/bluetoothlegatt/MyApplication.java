@@ -13,6 +13,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         ParseObject.registerSubclass(Characteristic.class);
+        ParseObject.registerSubclass(Device.class);
         Parse.initialize(this, "7W9y8Zjy1WHlTdWsL8W8fXu6gkhoTx7839SWELDD", "kaFrcmwHvIoUTjVkO2WArCOIZFMFwebYUtYiIIz9");
     }
 }

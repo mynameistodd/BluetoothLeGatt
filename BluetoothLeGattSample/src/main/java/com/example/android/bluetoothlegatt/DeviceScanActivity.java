@@ -23,9 +23,11 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,7 +38,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.SaveCallback;
+
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Activity for scanning and displaying available Bluetooth LE devices.
@@ -46,6 +55,7 @@ public class DeviceScanActivity extends ListActivity {
     private BluetoothAdapter mBluetoothAdapter;
     private boolean mScanning;
     private Handler mHandler;
+    private SharedPreferences prefs;
 
     private static final int REQUEST_ENABLE_BT = 1;
     // Stops scanning after 10 seconds.
@@ -76,6 +86,8 @@ public class DeviceScanActivity extends ListActivity {
             finish();
             return;
         }
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplication());
     }
 
     @Override
@@ -193,6 +205,35 @@ public class DeviceScanActivity extends ListActivity {
         public void addDevice(BluetoothDevice device) {
             if(!mLeDevices.contains(device)) {
                 mLeDevices.add(device);
+
+                //this probably needs to be somewhere else
+                ParseQuery<Device> query = ParseQuery.getQuery(Device.class);
+                query.whereEqualTo("address", device.getAddress());
+                query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+                query.findInBackground(new FindCallback<Device>() {
+                    @Override
+                    public void done(List<Device> devices, ParseException e) {
+                        final Device myDevice; //needs to be somewhere accessible to everything.
+
+                        if (devices.size() > 0) {
+                            myDevice = devices.get(0);
+                            saveDeviceObjectId(myDevice.getObjectId());
+                        } else {
+                            myDevice = new Device();
+                            myDevice.setName(devices.get(0).getName());
+                            myDevice.setAddress(devices.get(0).getAddress());
+                            myDevice.setCapturedAt(new Date());
+                            myDevice.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    saveDeviceObjectId(myDevice.getObjectId());
+                                }
+                            });
+                        }
+                    }
+                });
+
+
             }
         }
 
@@ -243,6 +284,12 @@ public class DeviceScanActivity extends ListActivity {
 
             return view;
         }
+    }
+
+    private void saveDeviceObjectId(String deviceObjectId) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("deviceObjectId", deviceObjectId);
+        editor.apply();
     }
 
     // Device scan callback.
